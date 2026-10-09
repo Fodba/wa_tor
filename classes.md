@@ -1,16 +1,20 @@
-* Fish:
+* Poisson:
+    Attributs:
+        * temps_reproduction
+        * position_x
+        * position_y
+        * image (représentation graphique)
+    Méthodes:
+        * Regarder
+        * déplacement(horizontal,vertical)
+        * reproduction
+        * Mourir
+
+* Requin(Poisson):
     Attributs:
         * temps_reproduction
         * energie
     Méthodes:
-    * déplacement(haut,gauche)
-    * reproduction
-
-* Shark(Fish):
-    Attributs:
-        * vitesse_deplacement
-    Méthodes:
-        * Regarder
         * Manger
         * Mourir
 
@@ -19,11 +23,14 @@
         * largeur
         * hauteur
     Méthodes:
-        *
+        * Initialisation
+        * Reset
 
 
-* World:
+* Monde:
     Attributs:
         * grille
     Méthodes:
-        * 
+        * Initialisation
+        * boucle principale
+        * conversion coordonnées
