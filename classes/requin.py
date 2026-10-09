@@ -45,3 +45,8 @@ class Requin(Poisson):
         # vérification du temps de reproduction
         # Vérification des cases à proximité
         pass
+
+
+
+    vide = 0
+    

@@ -20,6 +20,7 @@ class Grille:
 
     def afficher(self, population: list[Poisson]):
         for poisson in population:
+            # Lancer pour chaque fish la méthode regarder()
             # Lancer pour chaque fish la méthode mouvement()
 
 

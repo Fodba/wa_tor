@@ -48,6 +48,15 @@ class Monde:
             return False
         pass
 
+    def action_poisson(self,poisson: Poisson):
+        # le poisson observe son environnement
+        # le poisson évalue sa destination
+        # le poisson se déplace 
+        resultat = poisson.regarder()
+        poisson.mouvement(resultat)
+        poisson.reproduction()
+
+
     def boucle(self):
         population_totale:list[Poisson] = []
         nouvelle_population:list[Poisson] = []
