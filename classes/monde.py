@@ -50,31 +50,30 @@ class Monde:
 
     def boucle(self):
         population_totale:list[Poisson] = []
-        new_population:list[Poisson] = []
+        nouvelle_population:list[Poisson] = []
         continuer = True
-        compteur = 0
 
         while continuer:
             # Création et placement de la population
             for position_horizontale in range(self.taille_grille[0]):
                 for position_verticale in range(self.taille_grille[1]):
                     if r.randint(0,100) < 10:
-                        shark_reproduction_time = 5
-                        new_shark = Requin(position_horizontale,position_verticale,shark_reproduction_time)
-                        new_population.append(new_shark)
+                        temps_reproduction_requin = 5
+                        nouveau_requin = Requin(position_horizontale,position_verticale,temps_reproduction_requin)
+                        nouvelle_population.append(nouveau_requin)
                         # if self.check_reproduction(new_shark,shark_reproduction_time):
                         #     new_shark.mouvement()
                         #     new_shark2 = Shark(position_horizontale,position_verticale,shark_reproduction_time)
                         #     new_population.append(new_shark2)
 
                     elif r.randint(0,100) < 30:
-                        poisson_reproduction_time = 3
-                        new_poisson = Poisson(position_horizontale,position_verticale,poisson_reproduction_time)
-                        new_population.append(new_poisson)
+                        temps_reproduction_poisson = 3
+                        nouveau_poisson = Poisson(position_horizontale,position_verticale,temps_reproduction_poisson)
+                        nouvelle_population.append(nouveau_poisson)
                     
 
             # Affichage de la population
-            self.grille.afficher(new_population)
+            self.grille.afficher(nouvelle_population)
 
             # Défilement des chronons
             self.chronon += 1

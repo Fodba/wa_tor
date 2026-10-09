@@ -1,6 +1,6 @@
 from classes.poisson import Poisson
 
-# Classe représentant un requin, hérite des caractéristiques de Fish
+# Classe représentant un requin, hérite des caractéristiques de Poisson
 class Requin(Poisson):
     def __init__(
             self, 
@@ -33,7 +33,7 @@ class Requin(Poisson):
         super().mouvement("haut")
         pass
 
-    def manger(self,fish):
+    def manger(self,poisson):
         # supprimer le poisson
         # se déplacer à la position du poisson
         # récupère un point d'énergie

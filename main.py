@@ -4,12 +4,13 @@ from classes.requin import Requin
 from wa_tor.classes.monde import Monde
 import random as r
 
-TAILLE_GRILLE = 15
+LARGEUR_GRILLE = 25
+HAUTEUR_GRILLE = 25
 
 def main():
     print("hello world")
-    world = Monde(25,25)
-    world.initialisation(25,25)
+    world = Monde(LARGEUR_GRILLE,HAUTEUR_GRILLE)
+    world.initialisation(LARGEUR_GRILLE,HAUTEUR_GRILLE)
     world.boucle()
 
 
