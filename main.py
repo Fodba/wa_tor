@@ -1,15 +1,16 @@
-from wa_tor.classes.poisson import Poisson
-from wa_tor.classes.grille import Grille
+from classes.poisson import Poisson
+from classes.grille import Grille
 from classes.requin import Requin
-from wa_tor.classes.monde import Monde
+from classes.monde import Monde
 import random as r
 
-TAILLE_GRILLE = 15
+LARGEUR_GRILLE = 5
+HAUTEUR_GRILLE = 5
 
 def main():
     print("hello world")
-    world = Monde(25,25)
-    world.initialisation(25,25)
+    world = Monde(LARGEUR_GRILLE,HAUTEUR_GRILLE)
+    world.initialisation(LARGEUR_GRILLE,HAUTEUR_GRILLE)
     world.boucle()
 
 

@@ -19,19 +19,20 @@ class Grille:
 
 
     def afficher(self, population: list[Poisson]):
-        for fish in population:
+        for poisson in population:
+            # Lancer pour chaque fish la méthode regarder()
             # Lancer pour chaque fish la méthode mouvement()
 
 
 
             # Le caractère sur la grille correspond au caractère ou l'image 
             # utilisé pour représenter le poisson ou le requin 
-            self.surface[fish.position_X][fish.position_Y] = fish.image
+            self.surface[poisson.position_X][poisson.position_Y] = poisson.image
 
         for position_horizontale in range(self.taille_grille):
             ligne = "|"
             for position_verticale in range(self.taille_grille):
-                ligne += self.surface[position_horizontale][position_verticale] # pour afficher cahque caractère de la surface.
+                ligne += self.surface[position_horizontale][position_verticale] # pour afficher chaque caractère de la surface.
                 ligne += "|"
             print(ligne)
 
