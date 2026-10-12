@@ -13,29 +13,7 @@ class Poisson:
         self.image = "O"
         self.temps_reproduction = temps_reproduction
 
-<<<<<<< HEAD
 
-    def regarder(self):
-        """Permet au poisson de savoir ce qui se trouve dans les cases de son entourage"""
-        pass
-
-
-    def peut_se_reproduire(self):
-        """Verifie si le poisson est en mesure de se reproduire à l'instant T"""
-        pass
-
-
-    def mouvement(self, direction: str = None):
-        # se déplace aléatoirement (ou non) sur les axes horizontaux et verticaux
-        # if direction: (Si une direction est fournie)
-        #   Le poisson suit cette direction
-        # else:
-        #   Si un requin est présent sur une case voisine:
-        #       Le poisson se déplace dans la direction opposé au requin
-        #   Sinon:
-        #       Le poisson se déplace aléatoirement sur l'une des cases vides présentes.
-        pass
-=======
     def regarder(self, grille):
 
         #Variable des coordonnées des 4 cases voisines du poisson.
@@ -47,7 +25,6 @@ class Poisson:
         droite = (self.position_X, (self.position_Y + 1) % grille.taille_grille,)
         
         return haut, bas, gauche, droite
-
 
 
     def mouvement(self, direction: str = None, grille = None):
@@ -90,9 +67,6 @@ class Poisson:
 
             self.position_X = case[1][0]
             self.position_Y = case[1][1]
-
-        
->>>>>>> 57a154d (Modifacation déplacement du poisson + regarder)
 
 
     def se_reproduire(self):
