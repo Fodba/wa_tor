@@ -8,7 +8,7 @@
         * Regarder
         * déplacement(horizontal,vertical)
         * reproduction
-        * Mourir
+        * Etre mangé
 
 * Requin(Poisson):
     Attributs:
