@@ -8,7 +8,7 @@ import random as r
 # Classe gérant la simulation
 class Monde:
     # def __init__(self, grid: Grid) -> None:
-    def __init__(self,largeur:int,hauteur:int) -> None:
+    def __init__(self,largeur:int,hauteur:int, taille_pop: int) -> None:
     # def __init__(self) -> None:
         self.population = [] # Liste des entités (poisson et Shark) présents sur la grille
         self.chronon = 0 # 
@@ -16,7 +16,8 @@ class Monde:
         self._hauteur = hauteur
         self._ratio_pop_totale: int = 0
         self._ratio_shark_poisson: int = 0
-        self.initialisation(largeur,hauteur)
+        self.taille_pop = taille_pop
+        self.initialisation(largeur,hauteur,taille_pop)
 
 
     def ajuster_coordonnees(self, position_x, position_y):
@@ -35,9 +36,27 @@ class Monde:
         return x_torique, y_torique
 
 
-    def initialisation(self, largeur: int, hauteur: int) -> None:
+    def initialisation(self, largeur: int, hauteur: int, quantite_pop: int) -> None:
         self.taille_grille = (largeur,hauteur)
-        self.grille = Grille(largeur)
+        self.grille = Grille(largeur,hauteur)
+        self.population: list[Poisson] = []
+        for i in range(quantite_pop):
+            temps_reproduction_poisson = 3
+            x = r.randint(0,self.taille_grille[0]-1)
+            y = r.randint(0,self.taille_grille[1]-1)
+            nouveau_poisson = Poisson(x,y,temps_reproduction_poisson)
+            # nouveau_poisson = Requin(x,y,temps_reproduction_poisson)
+            self.population.append(nouveau_poisson)
+        # for position_horizontale in range(self.taille_grille[0]):
+        #     for position_verticale in range(self.taille_grille[1]):
+        #         if r.randint(0,100) < 10:
+        #         #         temps_reproduction_requin = 5
+        #         #         nouveau_requin = Requin(position_horizontale,position_verticale,temps_reproduction_requin)
+        #         #         self.population.append(nouveau_requin)
+        #         # elif r.randint(0,100) < 30:
+        #                 temps_reproduction_poisson = 3
+        #                 nouveau_poisson = Poisson(position_horizontale,position_verticale,temps_reproduction_poisson)
+        #                 self.population.append(nouveau_poisson)
         # self.grille.initialisation(largeur,hauteur)
     
     def check_reproduction(self,poisson: Poisson, reproduction_time: int):
@@ -58,31 +77,16 @@ class Monde:
 
 
     def boucle(self):
-        population_totale:list[Poisson] = []
-        nouvelle_population:list[Poisson] = []
         continuer = True
 
         while continuer:
-            # Création et placement de la population
-            for position_horizontale in range(self.taille_grille[0]):
-                for position_verticale in range(self.taille_grille[1]):
-                    if r.randint(0,100) < 10:
-                        temps_reproduction_requin = 5
-                        nouveau_requin = Requin(position_horizontale,position_verticale,temps_reproduction_requin)
-                        nouvelle_population.append(nouveau_requin)
-                        # if self.check_reproduction(new_shark,shark_reproduction_time):
-                        #     new_shark.mouvement()
-                        #     new_shark2 = Shark(position_horizontale,position_verticale,shark_reproduction_time)
-                        #     new_population.append(new_shark2)
-
-                    elif r.randint(0,100) < 30:
-                        temps_reproduction_poisson = 3
-                        nouveau_poisson = Poisson(position_horizontale,position_verticale,temps_reproduction_poisson)
-                        nouvelle_population.append(nouveau_poisson)
-                    
+            for animal in self.population:
+                print(type(animal))
+                animal.mouvement(grille = self.grille)
 
             # Affichage de la population
-            self.grille.afficher(nouvelle_population)
+            # self.initialisation(self.taille_grille[0],self.taille_grille[1],self.taille_pop)
+            self.grille.afficher(self.population)
 
             # Défilement des chronons
             self.chronon += 1

@@ -19,10 +19,10 @@ class Poisson:
         #Variable des coordonnées des 4 cases voisines du poisson.
             # +1 ou -1 permet de regarder une seule case à la fois.
             #Comme c'est un monde torique le % permet de passer d'un bord à l'autre de la grille.
-        haut = ((self.position_X - 1) % grille.taille_grille, self.position_Y)
-        bas = ((self.position_X + 1) % grille.taille_grille, self.position_Y)
-        gauche = (self.position_X, (self.position_Y - 1) % grille.taille_grille)
-        droite = (self.position_X, (self.position_Y + 1) % grille.taille_grille,)
+        haut = ((self.position_X - 1) % grille.taille_grille[0], self.position_Y)
+        bas = ((self.position_X + 1) % grille.taille_grille[0], self.position_Y)
+        gauche = (self.position_X, (self.position_Y - 1) % grille.taille_grille[1])
+        droite = (self.position_X, (self.position_Y + 1) % grille.taille_grille[1],)
         
         return haut, bas, gauche, droite
 
@@ -65,8 +65,22 @@ class Poisson:
 
             case = r.choice(cases_vides)
 
+            print(case)
+
             self.position_X = case[1][0]
             self.position_Y = case[1][1]
+
+
+    def se_deplacer(self,direction):
+        if direction == "haut":
+            self.position_X -= 1
+        if direction == "bas":
+            self.position_X += 1
+        if direction == "gauche":
+            self.position_Y -= 1
+        if direction == "droite":
+            self.position_Y += 1
+        
 
 
     def se_reproduire(self):
