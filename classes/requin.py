@@ -21,9 +21,10 @@ class Requin(Poisson):
         )
 
         self.image = "X"
+        self.just_born = True
 
         # Chaque requin commence avec 5 points d'énergie
-        self.energie = 100
+        self.energie = 8
 
         # Compter les chronons depuis la dernière reproduction
         self.compteur_reproduction = 0
@@ -94,17 +95,33 @@ class Requin(Poisson):
             ancien_y,
             self.temps_reproduction
         )
+        # nouveau_requin.image = "P"
 
         population.append(nouveau_requin)
 
         # Recommencer le compteur après la naissance.
         self.compteur_reproduction = 0
 
-    def mouvement(self, direction=None, grille=None, population=None):
+        return nouveau_requin
+
+    def mouvement(
+            self, 
+            direction=None, 
+            grille=None, 
+            population=None,
+            nouvelle_population=None
+        ):
         """Cherche un poisson en priorité, sinon une case vide."""
-        print("mouvement")
+        # print("mouvement")
 
 
+        # if self.just_born:
+        #     print("just born")
+        #     self.just_born = False
+        #     return
+        # else:
+            # self.image = "X"
+        
         # Le monde doit fournir la grille et sa liste d'animaux.
         if grille is None or population is None:
             print("grille is None")
@@ -176,15 +193,18 @@ class Requin(Poisson):
 
                 # Une autre requin bloque la case.
                 if requin_present:
+                    print("requin présent")
                     continue
 
                 # Si un poisson est dans la case choisir cette case
                 if poisson_case is not None:
                     poisson_trouve = poisson_case
                     destination = (x, y)
+                    # print("poisson présent")
                     break
 
                 else:
+                    # print("case vide")
                     # si la case est vide  la mémoriser et continuer à chercher un poisson
                     cases_vides.append((x, y))
 
@@ -193,6 +213,8 @@ class Requin(Poisson):
 
                 if len(cases_vides) > 0:
                     destination = r.choice(cases_vides)
+                    # print(f"cases vides: {cases_vides}")
+                    # print(f"destination: {destination}")
 
                 else:
                     # Toutes les cases sont bloquées.
@@ -218,9 +240,17 @@ class Requin(Poisson):
             # Vérifier la mort après le déplacement et le repas.
             if self.mourir(population):
                 return True
+            # else:
+            #     nouvelle_population.append(self)
 
             # Le parent vivant peut laisser un noveau requin dans sa case de départ.
-            # self.se_reproduire(ancien_x, ancien_y, population)
+            # nouvelle_population.append(self.se_reproduire(ancien_x, ancien_y, population))
+            self.se_reproduire(ancien_x, ancien_y, population)
+
+
+            print(f"energie : {self.energie}")
+            print(f"temps de reproduction : {self.temps_reproduction}")
+            # print(f"nouvelle population : {nouvelle_population}")
 
             return True
 

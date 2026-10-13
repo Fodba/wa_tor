@@ -3,6 +3,11 @@
 import random as r
 
 class Poisson:
+    HAUT = (0,-1)
+    BAS = (0,1)
+    DROITE = (1,-1)
+    GAUCHE = (-1,-1)
+
     def __init__(
             self, 
             position_x: int, 
@@ -66,7 +71,7 @@ class Poisson:
 
             case = r.choice(cases_vides)
 
-            print(case)
+            # print(case)
 
             self.position_X = case[1][0]
             self.position_Y = case[1][1]
@@ -84,7 +89,7 @@ class Poisson:
         
 
 
-    def se_reproduire(self):
+    def se_reproduire(self,temps_de_reproduction):
         # vérification du temps de reproduction
         # Vérification des cases à proximité
         pass

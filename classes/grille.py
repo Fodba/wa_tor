@@ -19,6 +19,25 @@ class Grille:
         return grille
 
 
+    def get_contenu_cellule(self,position_x,position_y):
+        cellule = self.surface[position_x][position_y]
+        if cellule == " ":
+            return cellule, "Vide"
+        if cellule == "X":
+            return cellule, "Requin"
+        if cellule == "O":
+            return cellule, "Poisson"
+        return cellule
+
+
+    def get_positions_voisines(self,position_x,position_y):
+        haut = ((position_x - 1) % self.taille_grille[0], position_y)
+        bas = ((position_x + 1) % self.taille_grille[0], position_y)
+        gauche = (position_x, (position_y - 1) % self.taille_grille[1])
+        droite = (position_x, (position_y + 1) % self.taille_grille[1],)
+        # pass
+        return haut, bas, gauche, droite
+
     def afficher(self, population: list[Poisson]):
         self.surface:list[list[str]] = self.creer_grille(self.taille_grille[0],self.taille_grille[1])
         for poisson in population:
