@@ -10,7 +10,7 @@ class Monde:
     # def __init__(self, grid: Grid) -> None:
     def __init__(self,largeur:int,hauteur:int, taille_pop: int) -> None:
     # def __init__(self) -> None:
-        self.population = [] # Liste des entités (poisson et Shark) présents sur la grille
+        self.population = [] # Liste des entités (poisson et requin) présents sur la grille
         self.chronon = 0 # 
         self._largeur = largeur
         self._hauteur = hauteur
@@ -41,11 +41,12 @@ class Monde:
         self.grille = Grille(largeur,hauteur)
         self.population: list[Poisson] = []
         for i in range(quantite_pop):
-            temps_reproduction_poisson = 3
+            temps_reproduction_poisson = 5
             x = r.randint(0,self.taille_grille[0]-1)
             y = r.randint(0,self.taille_grille[1]-1)
             nouveau_poisson = Poisson(x,y,temps_reproduction_poisson)
-            # nouveau_poisson = Requin(x,y,temps_reproduction_poisson)
+            self.population.append(nouveau_poisson)
+            nouveau_poisson = Requin(x,y,temps_reproduction_poisson)
             self.population.append(nouveau_poisson)
         # for position_horizontale in range(self.taille_grille[0]):
         #     for position_verticale in range(self.taille_grille[1]):
@@ -82,7 +83,7 @@ class Monde:
         while continuer:
             for animal in self.population:
                 print(type(animal))
-                animal.mouvement(grille = self.grille)
+                animal.mouvement(grille = self.grille,population=self.population)
 
             # Affichage de la population
             # self.initialisation(self.taille_grille[0],self.taille_grille[1],self.taille_pop)

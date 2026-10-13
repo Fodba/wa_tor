@@ -1,3 +1,4 @@
+
 # Classe représentant un poisson dans la grille
 import random as r
 
@@ -27,7 +28,7 @@ class Poisson:
         return haut, bas, gauche, droite
 
 
-    def mouvement(self, direction: str = None, grille = None):
+    def mouvement(self, direction: str = None, grille = None, population=None):
         print("Méthode mouvement")
         # se déplace aléatoirement (ou non) sur les axes horizontaux et verticaux
 
