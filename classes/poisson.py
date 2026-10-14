@@ -1,145 +1,150 @@
-
 # Classe représentant un poisson dans la grille
 import random as r
 
-class Poisson:
-    HAUT = (0,-1)
-    BAS = (0,1)
-    DROITE = (1,-1)
-    GAUCHE = (-1,-1)
 
-    def __init__(
-            self, 
-            position_x: int, 
-            position_y: int, 
-            temps_reproduction: int
-        ) -> None:
+class Poisson:
+
+    HAUT = (0, -1)
+    BAS = (0, 1)
+    DROITE = (1, 0)
+    GAUCHE = (-1, 0)
+
+    def __init__(self, position_x: int, position_y: int, temps_reproduction: int = 3) -> None:
+
         self.position_X = position_x
         self.position_Y = position_y
         self.image = "O"
         self.temps_reproduction = temps_reproduction
-        # Compter les chronons depuis la dernière reproduction
         self.compteur_reproduction = 0
-
+        self.ancien_X = position_x
+        self.ancien_Y = position_y
 
     def regarder(self, grille):
 
-        #Variable des coordonnées des 4 cases voisines du poisson.
-            # +1 ou -1 permet de regarder une seule case à la fois.
-            #Comme c'est un monde torique le % permet de passer d'un bord à l'autre de la grille.
+        # Récupérer les quatre cases voisines avec l'effet torique
         haut = ((self.position_X - 1) % grille.taille_grille[0], self.position_Y)
         bas = ((self.position_X + 1) % grille.taille_grille[0], self.position_Y)
         gauche = (self.position_X, (self.position_Y - 1) % grille.taille_grille[1])
-        droite = (self.position_X, (self.position_Y + 1) % grille.taille_grille[1],)
-        
+        droite = (self.position_X, (self.position_Y + 1) % grille.taille_grille[1])
+
         return haut, bas, gauche, droite
 
-
-    def mouvement(self, direction: str = None, grille = None, population=None):
-        # se déplace aléatoirement (ou non) sur les axes horizontaux et verticaux
+    def mouvement(self, direction=None, grille=None, population=None):
 
         if grille is None:
+            return None
 
-            return
+        # Un chronon passe même si le poisson reste bloqué
+        self.compteur_reproduction += 1
+
         cases_vides = []
 
         haut, bas, gauche, droite = self.regarder(grille)
 
-        if grille.surface[haut[0]][haut[1]] == " ":
-            cases_vides.append(("haut", haut))
+        # Chercher les cases libres autour du poisson
+        for nom, case in [
+            ("haut", haut),
+            ("bas", bas),
+            ("gauche", gauche),
+            ("droite", droite)
+        ]:
 
-        if grille.surface[bas[0]][bas[1]] == " ":
-            cases_vides.append(("bas", bas))
+            x, y = case
 
-        if grille.surface[gauche[0]][gauche[1]] == " ":
-            cases_vides.append(("gauche", gauche))
+            # Ne pas choisir sa propre case
+            if case == (self.position_X, self.position_Y):
+                continue
 
-        if grille.surface[droite[0]][droite[1]] == " ":
-            cases_vides.append(("droite", droite))
+            # Vérifier les animaux présents dans la population
+            if population is not None:
 
+                case_occupee = any(
+                    animal.position_X == x and animal.position_Y == y
+                    for animal in population
+                )
+
+            else:
+
+                case_occupee = grille.surface[x][y] != " "
+
+            if not case_occupee and (nom, case) not in cases_vides:
+                cases_vides.append((nom, case))
+
+        # Aucun déplacement possible
         if len(cases_vides) == 0:
-            return
+            return None
 
-        if direction:
+        # Garder l'ancienne position
+        self.ancien_X = self.position_X
+        self.ancien_Y = self.position_Y
 
-            for case in cases_vides:
-                if case[0] == direction:
-                    self.position_X = case[1][0]
-                    self.position_Y = case[1][1]
-                    break
+        # Choisir une direction
+        if direction is not None:
+
+            destinations = [
+                case for nom, case in cases_vides
+                if nom == direction
+            ]
+
+            if len(destinations) == 0:
+                return None
+
+            destination = destinations[0]
 
         else:
 
-            case = r.choice(cases_vides)
+            destination = r.choice(cases_vides)[1]
 
+        # Déplacer le poisson
+        self.position_X = destination[0]
+        self.position_Y = destination[1]
 
-            self.position_X = case[1][0]
-            self.position_Y = case[1][1]
+        # Mettre à jour la grille
+        grille.surface[self.ancien_X][self.ancien_Y] = " "
+        grille.surface[self.position_X][self.position_Y] = self.image
 
-        
-
-        # On diminue le temps avant la reproduction
-        if self.compteur_reproduction <= self.temps_reproduction:
-            self.compteur_reproduction += 1
-
+        # Reproduction après le déplacement
         if self.compteur_reproduction >= self.temps_reproduction:
-            self.se_reproduire(grille)
+            return self.se_reproduire(grille)
 
+        return None
 
-    def se_deplacer(self,direction):
+    def se_deplacer(self, direction):
+
         if direction == "haut":
             self.position_X -= 1
+
         if direction == "bas":
             self.position_X += 1
+
         if direction == "gauche":
             self.position_Y -= 1
+
         if direction == "droite":
             self.position_Y += 1
 
-
     def se_reproduire(self, grille=None):
-            if grille is None:
-                return None
 
-            # On cherche les cases vides autour du poisson
-            cases_vides = []
+        if grille is None:
+            return None
 
-            haut, bas, gauche, droite = self.regarder(grille)
+        # Le bébé naît sur l'ancienne case du parent
+        nouveau_poisson = Poisson(
+            self.ancien_X,
+            self.ancien_Y,
+            self.temps_reproduction
+        )
 
-            if grille.surface[haut[0]][haut[1]] == " ":
-                cases_vides.append(haut)
+        grille.surface[self.ancien_X][self.ancien_Y] = nouveau_poisson.image
 
-            if grille.surface[bas[0]][bas[1]] == " ":
-                cases_vides.append(bas)
+        # Recommencer le cycle de reproduction
+        self.compteur_reproduction = 0
 
-            if grille.surface[gauche[0]][gauche[1]] == " ":
-                cases_vides.append(gauche)
-
-            if grille.surface[droite[0]][droite[1]] == " ":
-                cases_vides.append(droite)
-
-            if len(cases_vides) == 0:
-                return None
-
-
-            """ pas aléatoire mais se reproduit à l'ancienne position du poisson."""
-            # # On crée un bébé poisson dans une case vide
-            # case = r.choice(cases_vides)
-
-            # nouveau_poisson = Poisson(case[0], case[1], 3)
-
-            # grille.surface[case[0]][case[1]] = nouveau_poisson.image
-
-            # self.temps_reproduction = 3
-
-            # return nouveau_poisson
-            
-            
+        return nouveau_poisson
 
 
 if __name__ == "__main__":
-    poisson = Poisson(2,3,3)
+
+    poisson = Poisson(2, 3, 3)
+
     print(f"poisson : {poisson}")
-
-    poisson.mouvement()
-

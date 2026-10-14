@@ -3,15 +3,15 @@ import random as r #pour avoir la direction aléatoire
 from classes.poisson import Poisson
 
 
-
 # Classe représentant un requin, qui hérite de Poisson
 class Requin(Poisson):
+
     def __init__(
-            self,
-            position_x: int,
-            position_y: int,
-            temps_reproduction: int = 5
-        ) -> None:
+        self,
+        position_x: int,
+        position_y: int,
+        temps_reproduction: int = 5
+    ) -> None:
 
         # Récupérer les attributs communs de Poisson
         super().__init__(
@@ -23,7 +23,7 @@ class Requin(Poisson):
         self.image = "X"
         self.just_born = True
 
-        # Chaque requin commence avec 5 points d'énergie
+        # Chaque requin commence avec 8 points d'énergie
         self.energie = 8
 
     def perte_energie(self) -> None:
@@ -39,7 +39,7 @@ class Requin(Poisson):
     def mourir(self, population: list[Poisson]):
         """Retire le requin si son énergie est égale à zéro."""
 
-        if self.energie == 0:
+        if self.energie <= 0:
 
             if self in population:
                 population.remove(self)
@@ -50,33 +50,33 @@ class Requin(Poisson):
             return False
 
     def manger(
-            self,
-            poisson: Poisson,
-            population: list[Poisson]
-        ) -> None:
+        self,
+        poisson: Poisson,
+        population: list[Poisson]
+    ) -> None:
         """Supprime le poisson mangé et récupère un point d'énergie."""
 
         # Le déplacement est déjà effectué dans mouvement().
         # Ne pas retirer un deuxième point d'énergie ici.
-        population.remove(poisson)
-
-        self.recuperation_energie()
+        if poisson in population:
+            population.remove(poisson)
+            self.recuperation_energie()
 
     def se_reproduire(
-            self,
-            ancien_x: int,
-            ancien_y: int,
-            population: list[Poisson]
-        ) -> None:
+        self,
+        ancien_x: int,
+        ancien_y: int,
+        population: list[Poisson]
+    ):
         """Crée un nouveau requin dans la case de départ du requin-parent."""
 
         # Vérifier si le temps de reproduction est arrivé
         if self.compteur_reproduction < self.temps_reproduction:
-            return
+            return None
 
         # Le parent doit être vivant pour se reproduire.
         if self.energie < 1:
-            return
+            return None
 
         # Vérifier que la case de départ est libre.
         for animal in population:
@@ -84,15 +84,14 @@ class Requin(Poisson):
                 animal.position_X == ancien_x
                 and animal.position_Y == ancien_y
             ):
-                return
+                return None
 
-        # Créer un nouveau requin : son énergie sera automatiquement égale à 5.
+        # Créer un nouveau requin : son énergie sera automatiquement égale à 8.
         nouveau_requin = Requin(
             ancien_x,
             ancien_y,
             self.temps_reproduction
         )
-        # nouveau_requin.image = "P"
 
         population.append(nouveau_requin)
 
@@ -102,29 +101,35 @@ class Requin(Poisson):
         return nouveau_requin
 
     def mouvement(
-            self, 
-            direction=None, 
-            grille=None, 
-            population=None,
-            nouvelle_population=None
-        ):
+        self,
+        direction=None,
+        grille=None,
+        population=None,
+        nouvelle_population=None
+    ):
         """Cherche un poisson en priorité, sinon une case vide."""
-        
+
         # Le monde doit fournir la grille et sa liste d'animaux.
         if grille is None or population is None:
+            print("grille is None")
             return False
 
-        # Un animal rétiré ne bouge plus
+        # Un animal retiré ne bouge plus
         if self not in population:
+            print("self not in population")
             return False
 
         # À zéro énergie, le requin meurt.
-        if self.energie == 0:
+        if self.energie <= 0:
             self.mourir(population)
+            grille.surface[self.position_X][self.position_Y] = " "
+            print("self.mourir")
             return False
 
         # Avec un point le requin peut se déplacer
         if self.energie >= 1:
+            print("self.energie >=1")
+
             # Un appel correspond à un chronon.
             self.compteur_reproduction += 1
 
@@ -133,7 +138,6 @@ class Requin(Poisson):
 
             # Préparer la liste des cases
             cases_voisines = []
-            # cases_voisines = [haut, bas, gauche, droite]
 
             for case in [haut, bas, gauche, droite]:
 
@@ -149,7 +153,7 @@ class Requin(Poisson):
             destination = None
             poisson_trouve = None
 
-            # Boucle for pour examiner les cases 
+            # Boucle for pour examiner les cases
             for x, y in cases_voisines:
 
                 requin_present = False
@@ -173,6 +177,7 @@ class Requin(Poisson):
 
                 # Une autre requin bloque la case.
                 if requin_present:
+                    print("requin présent")
                     continue
 
                 # Si un poisson est dans la case choisir cette case
@@ -182,7 +187,7 @@ class Requin(Poisson):
                     break
 
                 else:
-                    # si la case est vide  la mémoriser et continuer à chercher un poisson
+                    # si la case est vide la mémoriser et continuer à chercher un poisson
                     cases_vides.append((x, y))
 
             # Si un poisson n'est pas trouvé choisir une case vide.
@@ -205,6 +210,9 @@ class Requin(Poisson):
             self.position_X = destination[0]
             self.position_Y = destination[1]
 
+            grille.surface[ancien_x][ancien_y] = " "
+            grille.surface[self.position_X][self.position_Y] = self.image
+
             # Chaque déplacement diminue énergie
             self.perte_energie()
 
@@ -214,15 +222,24 @@ class Requin(Poisson):
 
             # Vérifier la mort après le déplacement et le repas.
             if self.mourir(population):
+                grille.surface[self.position_X][self.position_Y] = " "
                 return True
-            # else:
-            #     nouvelle_population.append(self)
 
             # Le parent vivant peut laisser un noveau requin dans sa case de départ.
-            # nouvelle_population.append(self.se_reproduire(ancien_x, ancien_y, population))
-            self.se_reproduire(ancien_x, ancien_y, population)
+            nouveau_requin = self.se_reproduire(
+                ancien_x,
+                ancien_y,
+                population
+            )
+
+            if nouveau_requin is not None:
+                grille.surface[ancien_x][ancien_y] = nouveau_requin.image
+
+            print(f"energie : {self.energie}")
+            print(f"temps de reproduction : {self.temps_reproduction}")
 
             return True
 
         else:
+            print("energie epuisee")
             return False

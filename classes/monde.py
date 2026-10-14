@@ -7,57 +7,113 @@ import random as r
 
 # Classe gérant la simulation
 class Monde:
-    def __init__(self,largeur:int,hauteur:int, taille_pop: int) -> None:
+
+    def __init__(self, largeur: int, hauteur: int, taille_pop: int) -> None:
+
         self.population = [] # Liste des entités (poisson et requin) présents sur la grille
-        self.chronon = 0 # 
+        self.chronon = 0 #
         self._largeur = largeur
         self._hauteur = hauteur
         self._ratio_pop_totale: int = 0
         self._ratio_shark_poisson: int = 0
         self.taille_pop = taille_pop
-        self.initialisation(largeur,hauteur,taille_pop)
 
+        self.initialisation(largeur, hauteur, taille_pop)
 
     def initialisation(self, largeur: int, hauteur: int, quantite_pop: int) -> None:
-        self.taille_grille = (largeur,hauteur)
-        self.grille = Grille(largeur,hauteur)
+
+        self.taille_grille = (largeur, hauteur)
+        self.grille = Grille(largeur, hauteur)
         self.population: list[Poisson] = []
+
+        if quantite_pop > largeur * hauteur:
+            raise ValueError("Il y a plus d'animaux que de cases disponibles.")
+
         for i in range(quantite_pop):
-            x = r.randint(0,self.taille_grille[0]-1)
-            y = r.randint(0,self.taille_grille[1]-1)
-            if r.randint(0,10) == 0:
-                temps_reproduction_requin = 5
-                nouveau_requin = Requin(x,y,temps_reproduction_requin)
+
+            while True:
+
+                x = r.randint(0, self.taille_grille[0] - 1)
+                y = r.randint(0, self.taille_grille[1] - 1)
+
+                case_occupee = any(
+                    animal.position_X == x and animal.position_Y == y
+                    for animal in self.population
+                )
+
+                if not case_occupee:
+                    break
+
+            if r.randint(0, 10) == 0:
+
+                temps_reproduction_requin = 12
+                nouveau_requin = Requin(x, y, temps_reproduction_requin)
                 self.population.append(nouveau_requin)
+
             else:
-                temps_reproduction_poisson = 3
-                nouveau_poisson = Poisson(x,y,temps_reproduction_poisson)
+
+                temps_reproduction_poisson = 4
+                nouveau_poisson = Poisson(x, y, temps_reproduction_poisson)
                 self.population.append(nouveau_poisson)
 
-    
-    def check_reproduction(self,poisson: Poisson, reproduction_time: int):
+    def check_reproduction(self, poisson: Poisson, reproduction_time: int):
+
         # Vérifie si le temps de reproduction est écoulé pour le poisson
-        if poisson.temps_reproduction == 0:
+        if poisson.compteur_reproduction >= reproduction_time:
             return True
-        else: 
+        else:
             return False
 
+    def action_poisson(self, poisson: Poisson):
+
+        # le poisson observe son environnement
+        # le poisson évalue sa destination
+        # le poisson se déplace
+        return poisson.mouvement(
+            grille=self.grille,
+            population=self.population
+        )
 
     def boucle(self):
+
         continuer = True
 
         while continuer:
+
             nouvelle_population = self.population.copy()
             count = 1
-            for animal in self.population:
-                animal.mouvement(grille = self.grille,population=nouvelle_population)
+
+            for animal in self.population.copy():
+
+                if animal not in nouvelle_population:
+                    continue
+
+                # print(type(animal))
+                print(f"compteur d'animaux: {count}")
+
+                result = animal.mouvement(
+                    grille=self.grille,
+                    population=nouvelle_population
+                )
+
+                if isinstance(result, Poisson):
+                    nouvelle_population.append(result)
+
                 count += 1
 
             # Affichage de la population
+            # print(f"nouvelle population : {nouvelle_population}")
             self.population = nouvelle_population.copy()
             self.grille.afficher(self.population)
 
             # Défilement des chronons
             self.chronon += 1
             print(self.chronon)
+            print()
+
             time.sleep(0.5)
+
+    def genere_rapport(self):
+        """Génère un rapport de données de la simulation
+        """
+        pass
