@@ -73,7 +73,6 @@ class Poisson:
 
             case = r.choice(cases_vides)
 
-            # print(case)
 
             self.position_X = case[1][0]
             self.position_Y = case[1][1]
@@ -131,16 +130,18 @@ class Poisson:
             if len(cases_vides) == 0:
                 return None
 
-            # On crée un bébé poisson dans une case vide
-            case = r.choice(cases_vides)
 
-            nouveau_poisson = Poisson(case[0], case[1], 3)
+            """ pas aléatoire mais se reproduit à l'ancienne position du poisson."""
+            # # On crée un bébé poisson dans une case vide
+            # case = r.choice(cases_vides)
 
-            grille.surface[case[0]][case[1]] = nouveau_poisson.image
+            # nouveau_poisson = Poisson(case[0], case[1], 3)
 
-            self.temps_reproduction = 3
+            # grille.surface[case[0]][case[1]] = nouveau_poisson.image
 
-            return nouveau_poisson
+            # self.temps_reproduction = 3
+
+            # return nouveau_poisson
             
             
 
