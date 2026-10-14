@@ -6,7 +6,7 @@ import random as r
 
 LARGEUR_GRILLE = 10
 HAUTEUR_GRILLE = 10
-POPULATION_GLOBALE = 15
+POPULATION_GLOBALE = 2
 
 def main():
     print("hello world")

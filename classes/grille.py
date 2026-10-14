@@ -6,7 +6,6 @@ class Grille:
     def __init__(self, largeur: int, hauteur: int) -> None:
         self.surface:list[list[str]] = self.creer_grille(largeur,hauteur)
         self.taille_grille = (largeur,hauteur)
-        
 
     def creer_grille(self, largeur: int, hauteur: int):
         grille = []
@@ -18,7 +17,6 @@ class Grille:
         self.taille_grille = (largeur,hauteur)
         return grille
 
-
     def get_contenu_cellule(self,position_x,position_y):
         cellule = self.surface[position_x][position_y]
         if cellule == " ":
@@ -29,7 +27,6 @@ class Grille:
             return cellule, "Poisson"
         return cellule
 
-
     def get_positions_voisines(self,position_x,position_y):
         haut = ((position_x - 1) % self.taille_grille[0], position_y)
         bas = ((position_x + 1) % self.taille_grille[0], position_y)
@@ -39,22 +36,19 @@ class Grille:
         return haut, bas, gauche, droite
 
     def afficher(self, population: list[Poisson]):
-        self.surface:list[list[str]] = self.creer_grille(self.taille_grille[0],self.taille_grille[1])
+        self.surface:list[list[str]] = self.creer_grille(
+            self.taille_grille[0],
+            self.taille_grille[1]
+        )
         for poisson in population:
-            # Lancer pour chaque fish la méthode regarder()
-            # Lancer pour chaque fish la méthode mouvement()
-
-
-
-            # Le caractère sur la grille correspond au caractère ou l'image 
-            # utilisé pour représenter le poisson ou le requin 
+            # Le caractère sur la grille correspond au caractère ou l'image
+            # utilisé pour représenter le poisson ou le requin
             self.surface[poisson.position_X][poisson.position_Y] = poisson.image
 
         for position_horizontale in range(self.taille_grille[0]):
             ligne = "|"
             for position_verticale in range(self.taille_grille[1]):
-                ligne += self.surface[position_horizontale][position_verticale] # pour afficher chaque caractère de la surface.
+                # pour afficher chaque caractère de la surface.
+                ligne += self.surface[position_horizontale][position_verticale] 
                 ligne += "|"
             print(ligne)
-
-

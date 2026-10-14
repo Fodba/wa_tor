@@ -109,39 +109,22 @@ class Requin(Poisson):
             nouvelle_population=None
         ):
         """Cherche un poisson en priorité, sinon une case vide."""
-        # print("mouvement")
-
-
-        # if self.just_born:
-        #     print("just born")
-        #     self.just_born = False
-        #     return
-        # else:
-            # self.image = "X"
         
         # Le monde doit fournir la grille et sa liste d'animaux.
         if grille is None or population is None:
-            print("grille is None")
-            # print(grille)
-            # print(population)
             return False
 
         # Un animal rétiré ne bouge plus
         if self not in population:
-            print("self not in population")
             return False
 
         # À zéro énergie, le requin meurt.
         if self.energie == 0:
             self.mourir(population)
-            
-            print("self.mourir")
             return False
 
         # Avec un point le requin peut se déplacer
         if self.energie >= 1:
-            print("self.energie >=1")
-
             # Un appel correspond à un chronon.
             self.compteur_reproduction += 1
 
@@ -190,18 +173,15 @@ class Requin(Poisson):
 
                 # Une autre requin bloque la case.
                 if requin_present:
-                    print("requin présent")
                     continue
 
                 # Si un poisson est dans la case choisir cette case
                 if poisson_case is not None:
                     poisson_trouve = poisson_case
                     destination = (x, y)
-                    # print("poisson présent")
                     break
 
                 else:
-                    # print("case vide")
                     # si la case est vide  la mémoriser et continuer à chercher un poisson
                     cases_vides.append((x, y))
 
@@ -210,8 +190,6 @@ class Requin(Poisson):
 
                 if len(cases_vides) > 0:
                     destination = r.choice(cases_vides)
-                    # print(f"cases vides: {cases_vides}")
-                    # print(f"destination: {destination}")
 
                 else:
                     # Toutes les cases sont bloquées.
@@ -244,13 +222,7 @@ class Requin(Poisson):
             # nouvelle_population.append(self.se_reproduire(ancien_x, ancien_y, population))
             self.se_reproduire(ancien_x, ancien_y, population)
 
-
-            print(f"energie : {self.energie}")
-            print(f"temps de reproduction : {self.temps_reproduction}")
-            # print(f"nouvelle population : {nouvelle_population}")
-
             return True
 
         else:
-            print("energie epuisee")
             return False

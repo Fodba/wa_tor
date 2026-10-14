@@ -36,7 +36,6 @@ class Poisson:
 
 
     def mouvement(self, direction: str = None, grille = None, population=None):
-        print("Méthode mouvement")
         # se déplace aléatoirement (ou non) sur les axes horizontaux et verticaux
 
         if grille is None:
@@ -80,10 +79,10 @@ class Poisson:
         
 
         # On diminue le temps avant la reproduction
-        if self.compteur_reproduction >= self.temps_reproduction:
+        if self.compteur_reproduction <= self.temps_reproduction:
             self.compteur_reproduction += 1
 
-        if self.temps_reproduction == self.temps_reproduction:
+        if self.compteur_reproduction >= self.temps_reproduction:
             self.se_reproduire(grille)
 
 
@@ -96,15 +95,7 @@ class Poisson:
             self.position_Y -= 1
         if direction == "droite":
             self.position_Y += 1
-        
 
-
-    # def se_reproduire(self,grille=None):
-    #     if grille is None:
-    #         return None
-
-    #     #On diminue le temps avant la reproduction.
-    #     if self.temps
 
     def se_reproduire(self, grille=None):
             if grille is None:
