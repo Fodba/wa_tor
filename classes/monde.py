@@ -50,7 +50,7 @@ class Monde:
             # self.population.append(nouveau_poisson)
         # for position_horizontale in range(self.taille_grille[0]):
         #     for position_verticale in range(self.taille_grille[1]):
-            if r.randint(0,4) == 1:
+            if r.randint(0,10) == 0:
                     temps_reproduction_requin = 5
                     nouveau_requin = Requin(x,y,temps_reproduction_requin)
                     self.population.append(nouveau_requin)

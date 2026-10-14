@@ -26,9 +26,6 @@ class Requin(Poisson):
         # Chaque requin commence avec 5 points d'énergie
         self.energie = 8
 
-        # Compter les chronons depuis la dernière reproduction
-        self.compteur_reproduction = 0
-
     def perte_energie(self) -> None:
         """Retire un point d'énergie après un déplacement."""
 

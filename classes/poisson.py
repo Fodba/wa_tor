@@ -18,6 +18,8 @@ class Poisson:
         self.position_Y = position_y
         self.image = "O"
         self.temps_reproduction = temps_reproduction
+        # Compter les chronons depuis la dernière reproduction
+        self.compteur_reproduction = 0
 
 
     def regarder(self, grille):
@@ -76,6 +78,15 @@ class Poisson:
             self.position_X = case[1][0]
             self.position_Y = case[1][1]
 
+        
+
+        # On diminue le temps avant la reproduction
+        if self.compteur_reproduction >= self.temps_reproduction:
+            self.compteur_reproduction += 1
+
+        if self.temps_reproduction == self.temps_reproduction:
+            self.se_reproduire(grille)
+
 
     def se_deplacer(self,direction):
         if direction == "haut":
@@ -89,10 +100,49 @@ class Poisson:
         
 
 
-    def se_reproduire(self,temps_de_reproduction):
-        # vérification du temps de reproduction
-        # Vérification des cases à proximité
-        pass
+    # def se_reproduire(self,grille=None):
+    #     if grille is None:
+    #         return None
+
+    #     #On diminue le temps avant la reproduction.
+    #     if self.temps
+
+    def se_reproduire(self, grille=None):
+            if grille is None:
+                return None
+
+            # On cherche les cases vides autour du poisson
+            cases_vides = []
+
+            haut, bas, gauche, droite = self.regarder(grille)
+
+            if grille.surface[haut[0]][haut[1]] == " ":
+                cases_vides.append(haut)
+
+            if grille.surface[bas[0]][bas[1]] == " ":
+                cases_vides.append(bas)
+
+            if grille.surface[gauche[0]][gauche[1]] == " ":
+                cases_vides.append(gauche)
+
+            if grille.surface[droite[0]][droite[1]] == " ":
+                cases_vides.append(droite)
+
+            if len(cases_vides) == 0:
+                return None
+
+            # On crée un bébé poisson dans une case vide
+            case = r.choice(cases_vides)
+
+            nouveau_poisson = Poisson(case[0], case[1], 3)
+
+            grille.surface[case[0]][case[1]] = nouveau_poisson.image
+
+            self.temps_reproduction = 3
+
+            return nouveau_poisson
+            
+            
 
 
 if __name__ == "__main__":
