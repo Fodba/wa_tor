@@ -2,11 +2,7 @@
 import random as r
 
 class Poisson:
-    HAUT = (0, -1)
-    BAS = (0, 1)
-    DROITE = (1, 0)
-    GAUCHE = (-1, 0)
-
+    
     def __init__(self, position_x: int, position_y: int, temps_reproduction: int = 3) -> None:
         self.position_X = position_x
         self.position_Y = position_y
