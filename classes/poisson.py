@@ -1,16 +1,13 @@
 # Classe représentant un poisson dans la grille
 import random as r
 
-
 class Poisson:
-
     HAUT = (0, -1)
     BAS = (0, 1)
     DROITE = (1, 0)
     GAUCHE = (-1, 0)
 
     def __init__(self, position_x: int, position_y: int, temps_reproduction: int = 3) -> None:
-
         self.position_X = position_x
         self.position_Y = position_y
         self.image = "O"
@@ -20,7 +17,6 @@ class Poisson:
         self.ancien_Y = position_y
 
     def regarder(self, grille):
-
         # Récupérer les quatre cases voisines avec l'effet torique
         haut = ((self.position_X - 1) % grille.taille_grille[0], self.position_Y)
         bas = ((self.position_X + 1) % grille.taille_grille[0], self.position_Y)
@@ -30,7 +26,6 @@ class Poisson:
         return haut, bas, gauche, droite
 
     def mouvement(self, direction=None, grille=None, population=None):
-
         if grille is None:
             return None
 
@@ -38,7 +33,6 @@ class Poisson:
         self.compteur_reproduction += 1
 
         cases_vides = []
-
         haut, bas, gauche, droite = self.regarder(grille)
 
         # Chercher les cases libres autour du poisson
@@ -48,7 +42,6 @@ class Poisson:
             ("gauche", gauche),
             ("droite", droite)
         ]:
-
             x, y = case
 
             # Ne pas choisir sa propre case
@@ -57,14 +50,11 @@ class Poisson:
 
             # Vérifier les animaux présents dans la population
             if population is not None:
-
                 case_occupee = any(
                     animal.position_X == x and animal.position_Y == y
                     for animal in population
                 )
-
             else:
-
                 case_occupee = grille.surface[x][y] != " "
 
             if not case_occupee and (nom, case) not in cases_vides:
@@ -80,7 +70,6 @@ class Poisson:
 
         # Choisir une direction
         if direction is not None:
-
             destinations = [
                 case for nom, case in cases_vides
                 if nom == direction
@@ -90,9 +79,7 @@ class Poisson:
                 return None
 
             destination = destinations[0]
-
         else:
-
             destination = r.choice(cases_vides)[1]
 
         # Déplacer le poisson
@@ -110,21 +97,16 @@ class Poisson:
         return None
 
     def se_deplacer(self, direction):
-
         if direction == "haut":
             self.position_X -= 1
-
         if direction == "bas":
             self.position_X += 1
-
         if direction == "gauche":
             self.position_Y -= 1
-
         if direction == "droite":
             self.position_Y += 1
 
     def se_reproduire(self, grille=None):
-
         if grille is None:
             return None
 
@@ -144,7 +126,5 @@ class Poisson:
 
 
 if __name__ == "__main__":
-
     poisson = Poisson(2, 3, 3)
-
     print(f"poisson : {poisson}")

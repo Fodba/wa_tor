@@ -4,9 +4,9 @@ from classes.requin import Requin
 from classes.monde import Monde
 import random as r
 
-LARGEUR_GRILLE = 10
-HAUTEUR_GRILLE = 10
-POPULATION_GLOBALE = 2
+LARGEUR_GRILLE = 32
+HAUTEUR_GRILLE = 14
+POPULATION_GLOBALE = 220
 
 def main():
     print("hello world")
