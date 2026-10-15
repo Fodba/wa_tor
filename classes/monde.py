@@ -48,21 +48,7 @@ class Monde:
 
         self.grille.afficher(self.population)
 
-    def check_reproduction(self, poisson: Poisson, reproduction_time: int):
-        # Vérifie si le temps de reproduction est écoulé pour le poisson
-        if poisson.compteur_reproduction >= reproduction_time:
-            return True
-        else:
-            return False
-
-    def action_poisson(self, poisson: Poisson):
-        # le poisson observe son environnement
-        # le poisson évalue sa destination
-        # le poisson se déplace
-        return poisson.mouvement(
-            grille=self.grille, population=self.population
-        )
-
+  
     def boucle(self):
         continuer = True
 
@@ -71,8 +57,6 @@ class Monde:
             count = 1
 
             for animal in self.population.copy():
-                if animal not in nouvelle_population:
-                    continue
 
                 # print(type(animal))
                 print(f"compteur d'animaux: {count}")
