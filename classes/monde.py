@@ -16,8 +16,8 @@ class Monde:
         self.historique_requins = []
         self._largeur = largeur
         self._hauteur = hauteur
-        self._ratio_pop_totale: int = 0
-        self._ratio_shark_poisson: int = 0
+        # self._ratio_pop_totale: int = 0
+        # self._ratio_shark_poisson: int = 0
         self.taille_pop = taille_pop
         self.initialisation(largeur, hauteur, taille_pop)
 
@@ -43,6 +43,7 @@ class Monde:
                     break
 
             if r.randint(0, 10) == 0:
+            # if i % 5 <= 1:
                 temps_reproduction_requin = 10
                 nouveau_requin = Requin(x, y, temps_reproduction_requin)
                 self.population.append(nouveau_requin)
@@ -53,20 +54,6 @@ class Monde:
 
         self.grille.afficher(self.population)
 
-    #def check_reproduction(self, poisson: Poisson, reproduction_time: int):
-        # Vérifie si le temps de reproduction est écoulé pour le poisson
-        #if poisson.compteur_reproduction >= reproduction_time:
-           # return True
-        #else:
-            #return False
-
-    def action_poisson(self, poisson: Poisson):
-        # le poisson observe son environnement
-        # le poisson évalue sa destination
-        # le poisson se déplace
-        return poisson.mouvement(
-            grille=self.grille, population=self.population
-        )
 
     def boucle(self):
         continuer = True
@@ -85,22 +72,17 @@ class Monde:
             for animal in self.population.copy():
                 if animal not in nouvelle_population:
                     continue
-
-                # print(type(animal))
-                print(f"compteur d'animaux: {count}")
-
+                
                 result = animal.mouvement(
                     grille=self.grille,
                     population=nouvelle_population
                 )
 
-                if isinstance(result, Poisson) and not isinstance(result, Requin):
+                if isinstance(result, Poisson) and not isinstance(result,Requin):
                     nouvelle_population.append(result)
 
                 count += 1
-
-            # Affichage de la population
-            # print(f"nouvelle population : {nouvelle_population}")
+            
             self.population = nouvelle_population.copy()
             self.grille.afficher(self.population)
 

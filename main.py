@@ -1,16 +1,13 @@
-from classes.poisson import Poisson
-from classes.grille import Grille
-from classes.requin import Requin
 from classes.monde import Monde
 import random as r
 
-LARGEUR_GRILLE = 32
 HAUTEUR_GRILLE = 14
-POPULATION_GLOBALE = 220
+LARGEUR_GRILLE = 32
+POPULATION_GLOBALE = 300
 
 def main():
     print("hello world")
-    world = Monde(LARGEUR_GRILLE, HAUTEUR_GRILLE, POPULATION_GLOBALE)
+    world = Monde(HAUTEUR_GRILLE, LARGEUR_GRILLE, POPULATION_GLOBALE)
     # world.initialisation(LARGEUR_GRILLE,HAUTEUR_GRILLE)
     world.boucle()
 

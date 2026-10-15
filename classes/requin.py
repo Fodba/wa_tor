@@ -7,7 +7,6 @@ class Requin(Poisson):
         # Récupérer les attributs communs de Poisson
         super().__init__(position_x, position_y, temps_reproduction)
         self.image = "X"
-        self.just_born = True
         # Chaque requin commence avec 3 points d'énergie
         self.energie = 3
         self.energie_initiale = self.energie
@@ -64,24 +63,24 @@ class Requin(Poisson):
         """Cherche un poisson en priorité, sinon une case vide."""
         # Le monde doit fournir la grille et sa liste d'animaux.
         if grille is None or population is None:
-            print("grille is None")
+            # print("grille is None")
             return False
 
         # Un animal retiré ne bouge plus
         if self not in population:
-            print("self not in population")
+            # print("self not in population")
             return False
 
         # À zéro énergie, le requin meurt.
         if self.energie <= 0:
             self.mourir(population)
             grille.surface[self.position_X][self.position_Y] = " "
-            print("self.mourir")
+            # print("self.mourir")
             return False
 
         # Avec un point le requin peut se déplacer
         if self.energie >= 1:
-            print("self.energie >=1")
+            # print("self.energie >=1")
 
             # Un appel correspond à un chronon.
             self.compteur_reproduction += 1
@@ -122,7 +121,7 @@ class Requin(Poisson):
 
                 # Une autre requin bloque la case.
                 if requin_present:
-                    print("requin présent")
+                    # print("requin présent")
                     continue
 
                 # Si un poisson est dans la case choisir cette case
@@ -172,9 +171,9 @@ class Requin(Poisson):
             if nouveau_requin is not None:
                 grille.surface[ancien_x][ancien_y] = nouveau_requin.image
 
-            print(f"energie : {self.energie}")
-            print(f"temps de reproduction : {self.temps_reproduction}")
+            # print(f"energie : {self.energie}")
+            # print(f"temps de reproduction : {self.temps_reproduction}")
             return True
         else:
-            print("energie epuisee")
+            # print("energie epuisee")
             return False

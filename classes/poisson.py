@@ -21,6 +21,7 @@ class Poisson:
 
         return haut, bas, gauche, droite
 
+
     def mouvement(self, direction=None, grille=None, population=None):
         if grille is None:
             return None
@@ -92,15 +93,6 @@ class Poisson:
 
         return None
 
-    def se_deplacer(self, direction):
-        if direction == "haut":
-            self.position_X -= 1
-        if direction == "bas":
-            self.position_X += 1
-        if direction == "gauche":
-            self.position_Y -= 1
-        if direction == "droite":
-            self.position_Y += 1
 
     def se_reproduire(self, grille=None):
         if grille is None:
