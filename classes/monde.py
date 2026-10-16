@@ -161,9 +161,4 @@ class Monde:
         # Enregistrer les résultats après le comptage.
         self.historique_chronons.append(self.chronon)
         self.historique_poissons.append(nombre_poissons)
-        self.historique_requins.append(nombre_requins)       
-
-def genere_rapport(self):
-    """Génère un rapport de données de la simulation
-    """
-    pass
+        self.historique_requins.append(nombre_requins)

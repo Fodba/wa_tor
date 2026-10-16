@@ -23,41 +23,28 @@ class Grille:
             # Le caractère sur la grille correspond au caractère ou l'image
             # utilisé pour représenter le poisson ou le requin
             self.surface[poisson.position_X][poisson.position_Y] = poisson.image
-        # for position_horizontale in range(self.taille_grille[0]):
-        #     ligne = "|"
-        #     for position_verticale in range(self.taille_grille[1]):
-        #         ligne += self.surface[position_horizontale][position_verticale] # pour afficher chaque caractère de la surface.
-        #         ligne += "|"
-        #     print(ligne)
 
         for position_horizontale in range(self.taille_grille[0]):
-            # ligne += colored("|", "white", "on_blue")
-            ligne = colored("|","white","on_blue")
-            # ligne = ""
+            ligne = ""
             for position_verticale in range(self.taille_grille[1]):
                 # pour afficher chaque caractÃ¨re de la surface.
-                # ligne += self.surface[position_horizontale][position_verticale]
-                # ligne += "|"
-                # ligne += colored("|", "white", "on_blue")
                 if self.surface[position_horizontale][position_verticale] == " ":
                     ligne += colored(
-                        self.surface[position_horizontale][position_verticale],
+                        "🌊",
                         "blue",
                         "on_blue",
                     )
                 elif self.surface[position_horizontale][position_verticale] == "X":
                     ligne += colored(
-                        self.surface[position_horizontale][position_verticale],
+                        "🦈",
                         "red",
-                        "on_black",
+                        "on_red",
                     )
                 elif self.surface[position_horizontale][position_verticale] == "O":
                     ligne += colored(
-                        self.surface[position_horizontale][position_verticale],
+                        "🐠",
                         "green",
-                        "on_black",
+                        "on_green",
                     )
-                # ligne += self.surface[position_horizontale][position_verticale]
-                ligne += colored("|", "white", "on_blue")
             print(ligne)
         print()
