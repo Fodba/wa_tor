@@ -30,7 +30,7 @@ Le temps avance par **chronons**. À chaque chronon, chaque entité joue une foi
 
 ## 🚀 Installation
 
-**Prérequis :** Python _[3.X]_
+**Prérequis :** Python 3.14.4
 
 ```bash
 git clone https://github.com/Fodba/wa_tor.git
@@ -54,11 +54,12 @@ _[Où les modifier : fichier de config, arguments en ligne de commande, constant
 
 | Paramètre | Description | Valeur par défaut |
 |---|---|---|
-| _[largeur / hauteur]_ | Dimensions de la grille | _[…]_ |
-| _[TAILLE_POPULATION]_ | Population initiale de poissons et de requins | _[…]_ |
-| _[nb_requins]_ | Population initiale de requins | _[…]_ |
-| _[temps_de_reproduction]_ | Chronons avant reproduction d'un poisson | _[…]_ |
-| _[energie]_ | Énergie initiale d'un requin | _[…]_ |
+| _[largeur / hauteur]_ | Dimensions de la grille | 32 / 14 |
+| _[TAILLE_POPULATION]_ | Population initiale de poissons et de requins | 300 |
+| _[population]_ | Population initiale de poissons et requins | _[…]_ |
+| _[temps_de_reproduction]_ | Chronons avant reproduction d'un poisson | 3 |
+| _[temps_de_reproduction]_ | Chronons avant reproduction d'un poisson | 10|
+| _[energie]_ | Énergie initiale d'un requin | 3 |
 
 ---
 
@@ -73,7 +74,13 @@ wator/
 │   ├── _[requin.py]_
 │   └── _[monde.py]_
 ├── docs/
-│   └── _[diagramme_classes.png]_
+│   ├── UML/
+│   │   └── CU_Monde_Scenario.md
+│   │   └── CU_Monde.JPG
+│   │   └── CU_Poisson_Scenario.md
+│   │   └── CU_Poisson.md
+│   │   └── DC.JPG
+│   ├── Wa-Tor _ Écosystème Simulé de Requins et Poissons
 ├── main.py
 ├── requirements.txt
 └── README.md
@@ -99,7 +106,7 @@ Puis pour trouver les paramètres de stabilité de la simulation.
 
 ## 🛠️ Technologies
 
-- Python _[3.X]_
+- Python 3.14.4
 - termcolor
 
 ---

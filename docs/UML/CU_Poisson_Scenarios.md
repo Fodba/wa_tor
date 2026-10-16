@@ -40,7 +40,7 @@ Cas détaillé: Se nourir (1/2)
 2. Le requin mange le poisson
 3. Le requin récupère son enérgie initiale
 
-Cas détaillé: Se nourir (1/2)
+Cas détaillé: Se nourir (2/2)
 
 1. Le requin ne trouve aucune case contenant un poisson
 2. L'enérgie du requin est décrémenté de 1
@@ -52,7 +52,7 @@ Cas détaillé: Mourir (1/2)
 2. Le requin mange le poisson
 3. Le poisson est retiré de la population et de la grille
 
-Cas détaillé: Mourir (1/2)
+Cas détaillé: Mourir (2/2)
 
 1. Le requin ne trouve aucune case contenant un poisson
 2. L'enérgie du requin atteint 0

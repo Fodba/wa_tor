@@ -16,8 +16,6 @@ class Monde:
         self.historique_requins = []
         self._largeur = largeur
         self._hauteur = hauteur
-        # self._ratio_pop_totale: int = 0
-        # self._ratio_shark_poisson: int = 0
         self.taille_pop = taille_pop
         self.initialisation(largeur, hauteur, taille_pop)
 
@@ -61,7 +59,7 @@ class Monde:
         # Enregistrer la population initiale au chronon 0.
         self.compter_population()
 
-# Activer la mise à jour du graphique pendant la simulation.
+        # Activer la mise à jour du graphique pendant la simulation.
         plt.ion()
         figure, axes = plt.subplots()
 
@@ -141,7 +139,7 @@ class Monde:
 
             time.sleep(0.5)
 
-                    # Garder le graphique ouvert après la simulation.
+        # Garder le graphique ouvert après la simulation.
         plt.ioff()
         plt.show()
 
